@@ -12,13 +12,13 @@ img {
 .invalid-feedback {
   display: block; 
 }
-.step__list{
+.steps-list{
 	margin: 0;
 	padding: 10px 40px;
 	display: flex;
 	justify-content: space-between;
 }
-.step__list li{
+.steps-list__item{
 	list-style: none;
 	font-weight: bold;
 	display: flex;
@@ -28,7 +28,7 @@ img {
 	position: relative;
 	width: 25%;
 }
-.step__list li:before{
+.steps-list__item:before{
 	content: '1';
 	height: 30px;
 	width: 30px;
@@ -41,16 +41,16 @@ img {
 	position: relative;
 	z-index: 2;
 }
-.step__list li:nth-child(2):before{
+.steps-list__item:nth-child(2):before{
 	content: '2';
 }
-.step__list li:nth-child(3):before{
+.steps-list__item:nth-child(3):before{
 	content: '3';
 }
-.step__list li:nth-child(4):before{
+.steps-list__item:nth-child(4):before{
 	content: '4';
 }
-.step__list li:after{
+.steps-list__item:after{
 	content: '';
 	height: 3px;
 	width: 100%;
@@ -59,33 +59,26 @@ img {
 	top: 15px;
 	background-color: orange;
 }
-.step__list li:last-child:after{
+.steps-list__item:last-child:after{
 	display: none;
 }
-.step__list li.active:before{
+.steps-list__item.active:before{
 	border: 3px solid orange;
 	background-color: lightblue;
 }
-.step__list li.active:after{
+.steps-list__item.active:after{
 	background-color: lightgrey;
 }
-.step__list li.active ~ li:before{
+.steps-list__item.active ~ .steps-list__item:before{
 	border: 3px solid white;
 	background-color: lightgrey;
 }
-.step__list li.active ~ li:after{
+.steps-list__item.active ~ .steps-list__item:after{
 	background-color: lightgrey;
 }
-.step__list li.visited:before{
+.steps-list__item.visited:before{
 	border: 3px solid orange;
 	background-color: orange;
-}
-
-.step{
-	display: none;
-}
-.step.active{
-	display: block;
 }
 .hidden{
 	display: none;

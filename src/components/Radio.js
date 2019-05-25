@@ -7,7 +7,7 @@ const Radio = props => {
 		name,
 		selectedValue,
 		options,
-		onChange
+		onRadio
 	} = props;
 	const getRadioOptions = () => {
 		return options.map(item => (
@@ -19,7 +19,7 @@ const Radio = props => {
 					name={name}
 					value={item.value}
 					defaultChecked={item.value === selectedValue}
-					onChange={onChange}
+					onChange={onRadio}
 				/>
 				<label htmlFor={item.id} className="form-check-label">{item.labelText}</label>
 			</div>

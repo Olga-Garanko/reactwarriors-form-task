@@ -1,14 +1,17 @@
 import React from "react";
-import countries from "../data/countries";
-import cities from "../data/cities";
+import StepsList from "./StepsList";
 import Field from "./Field";
 import Check from "./Check";
 import Radio from "./Radio";
 import Selector from "./Selector";
+import BasicStep from "./BasicStep";
+import ContactsStep from "./ContactsStep";
+import AvatarStep from "./AvatarStep";
+import FinishStep from "./FinishStep";
+import Buttons from "./Buttons";
 export default class App extends React.Component {
 	constructor() {
 		super();
-
 		this.state = {
 			activeStep: 0,
 			steps: [
@@ -25,8 +28,8 @@ export default class App extends React.Component {
 			repeatPassword: "",
 			agreeConfidential: true,
 			gender: "male",
-			country: "0",
-			city: "0",
+			country: 0,
+			city: 0,
 			avatar: "",
 			errors: {
 				username: false,
@@ -37,8 +40,6 @@ export default class App extends React.Component {
 				repeatPassword: false,
 				agreeConfidential: false,
 			},
-			countries: countries,
-			cities: [],
 			genders: [{
 					id: "male",
 					value: "male",
@@ -51,7 +52,6 @@ export default class App extends React.Component {
 				},
 			],
 		};
-		console.log(Object.values(cities));
 	};
 	
 	onChange = event => {
@@ -63,8 +63,7 @@ export default class App extends React.Component {
 	onChangeCountry = event => {
 		this.setState({
 			[event.target.name]: event.target.value,
-			'cities': Object.values(cities).filter(item => item.country === +event.target.value),
-			city: "0"
+			city: 0
 		});
 	};
 
@@ -89,7 +88,6 @@ export default class App extends React.Component {
 			});
 		};
 		reader.readAsDataURL(event.target.files[0]);
-		console.log(this.state.avatar)
 	};
 
 	onPrev = () => {
@@ -172,172 +170,17 @@ export default class App extends React.Component {
 	};
 
 	render() {
+
 		return (
 			<div className="form-container card">
-				<ul className="step__list">
-					{
-						this.state.steps.map(item => {
-							return <li key={item.id} className={this.state.activeStep === item.id ? 'active' : ''}>{item.name}</li>
-						})
-					}
-				</ul>	
+				<StepsList steps={this.state.steps} activeStep={this.state.activeStep} />
 				<form className="form card-body">
-					<div className={`step ${this.state.activeStep === 0 ? 'active' : ''}`}>
-						<Field
-							id="username"
-							labelText="Firstname"
-							type="text"
-							placeholder="Enter firstname"
-							name="username"
-							value={this.state.username}
-							onChange={this.onChange}
-							error={this.state.errors.username}
-						/>
-						<Field
-							id="userSurname"
-							labelText="Lastname"
-							type="text"
-							placeholder="Enter lastname"
-							name="userSurname"
-							value={this.state.userSurname}
-							onChange={this.onChange}
-							error={this.state.errors.userSurname}
-						/>
-						<Field
-							id="password"
-							labelText="Password"
-							type="password"
-							placeholder="Enter password"
-							name="password"
-							value={this.state.password}
-							onChange={this.onChange}
-							error={this.state.errors.password}
-						/>
-						<Field
-							id="repeatPassword"
-							labelText="Repeat password"
-							type="password"
-							placeholder="Repeat password"
-							name="repeatPassword"
-							value={this.state.repeatPassword}
-							onChange={this.onChange}
-							error={this.state.errors.repeatPassword}
-						/>
-						<Radio
-							className="form-check-input"
-							id="gender"
-							labelText="Gender"
-							name="gender"
-							selectedValue={this.state.gender}
-							onChange={this.onRadio}
-							options={this.state.genders}
-						/>
-					</div>
-					<div className={`step ${this.state.activeStep === 1 ? 'active' : ''}`}>
-						<Field
-							id="email"
-							labelText="Email"
-							type="text"
-							placeholder="Enter email"
-							name="email"
-							value={this.state.email}
-							onChange={this.onChange}
-							error={this.state.errors.email}
-						/>
-						<Field
-							id="phone"
-							labelText="Mobile"
-							type="text"
-							placeholder="Enter mobile (000) 000-0000"
-							name="phone"
-							value={this.state.phone}
-							onChange={this.onChange}
-							error={this.state.errors.phone}
-						/>
-						<Selector
-							className="form-control"
-							id="country"
-							labelText="Country"
-							name="country"
-							value={this.state.country}
-							options={this.state.countries}
-							onChange={this.onChangeCountry}
-							error={this.state.errors.country}
-						/>
-						<Selector
-							className="form-control"
-							id="city"
-							labelText="City"
-							name="city"
-							value={this.state.city}
-							options={this.state.cities}
-							onChange={this.onChange}
-							error={this.state.errors.city}
-						/>
-					</div>
-					<div className={`step ${this.state.activeStep === 2 ? 'active' : ''}`}>
-						<div className='avatar'>
-							{!(this.state.avatar) ? <img src='./images/default-avatar.59337bae.png' alt='' /> : <img src={this.state.avatar} alt='' />}
-						</div>
-						<div className="form-group">
-							<div className="custom-file">
-								<input
-									type="file"
-									className="custom-file-input"
-									id="avatar"
-									name="avatar"
-									onChange={this.onChangeAvatar}
-								/>
-								<label className="custom-file-label" htmlFor="avatar">Choose file</label>
-								{this.state.errors.avatar ? <div className="invalid-feedback">{this.state.errors.avatar}</div> : null}
-							</div>
-						</div>
-						<Check
-							className="form-check-input"
-							type="checkbox"
-							id="agreeConfidential"
-							labelText="Confirm the processing of data"
-							name="agreeConfidential"
-							value={this.state.agreeConfidential}
-							onChange={this.onCheck}
-							checked={this.state.agreeConfidential}
-							error={this.state.errors.agreeConfidential}
-						/>
-					</div>
-					<div className={`step ${this.state.activeStep === 3 ? 'active' : ''}`}>
-						<div className='avatar'>
-							<img src={this.state.avatar} alt='' />
-						</div>
-						
-						<div>{this.state.username} {this.state.userSurname}</div>
-						<div>Email: {this.state.email}</div>
-						<div>Mobile: {this.state.phone}</div>
-						<div>Location: {this.state.country}, {this.state.city}</div>
-						<button
-							type="button"
-							className="btn btn-primary w-100"
-							onClick={this.onReset}
-						>
-							Reset
-						</button>	
-					</div>
-					<div className={this.state.activeStep === (this.state.steps.length - 1) ? 'hidden' : ''}>
-						<button
-							type="button"
-							className="btn btn-primary m-2"
-							onClick={this.onPrev}
-							disabled={!this.state.activeStep}
-						>
-							Previous
-						</button>
-						<button
-							type="button"
-							className="btn btn-primary m-2"
-							onClick={this.onSubmit}
-						>
-							Next
-						</button>
-					</div>
+					{ this.state.activeStep === 0 && <BasicStep state={this.state} onChange={this.onChange} onRadio={this.onRadio} /> }
+					{ this.state.activeStep === 1 && <ContactsStep state={this.state} onChange={this.onChange} onChangeCountry={this.onChangeCountry} /> }
+					{ this.state.activeStep === 2 && <AvatarStep state={this.state} onCheck={this.onCheck} onChangeAvatar={this.onChangeAvatar} /> }
+					{ this.state.activeStep === 3 && <FinishStep state={this.state} onReset={this.onReset} /> }
+					{ !(this.state.activeStep === (this.state.steps.length - 1)) && <Buttons activeStep={this.activeStep} onPrev={this.onPrev}  onSubmit={this.onSubmit} /> }
+
 				</form>
 			</div>
 		);
