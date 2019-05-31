@@ -1,6 +1,6 @@
 import React from "react";
 
-const Selector = props => {
+const SelectField = props => {
 	const {
 		id,
 		labelText,
@@ -35,4 +35,4 @@ const Selector = props => {
 	);
 };
 
-export default Selector;
+export default SelectField;

@@ -1,6 +1,6 @@
 import React from "react";
-import Field from "./Field";
-import Selector from "./Selector";
+import Field from "./common/Field";
+import SelectField from "./common/SelectField";
 import countries from "../data/countries";
 import cities from "../data/cities";
 const getCitiesByCountry = countryId => {
@@ -44,7 +44,7 @@ const ContactsStep = props => {
 				onChange={onChange}
 				error={state.errors.phone}
 			/>
-			<Selector
+			<SelectField
 				className="form-control"
 				id="country"
 				labelText="Country"
@@ -54,7 +54,7 @@ const ContactsStep = props => {
 				onChange={onChangeCountry}
 				error={state.errors.country}
 			/>
-			<Selector
+			<SelectorField
 				className="form-control"
 				id="city"
 				labelText="City"

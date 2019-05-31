@@ -1,14 +1,15 @@
 import React from "react";
-import StepsList from "./StepsList";
 import Field from "./Field";
-import Check from "./Check";
-import Radio from "./Radio";
-import Selector from "./Selector";
+import CheckboxField from "./common/CheckboxField";
+import RadioboxField from "./common/RadioboxField";
+import SelectField from "./common/SelectField";
+import StepsList from "./StepsList";
 import BasicStep from "./BasicStep";
 import ContactsStep from "./ContactsStep";
 import AvatarStep from "./AvatarStep";
 import FinishStep from "./FinishStep";
-import Buttons from "./Buttons";
+import validator from "./services/validator";
+import Buttons from "./common/Buttons";
 export default class App extends React.Component {
 	constructor() {
 		super();
@@ -20,17 +21,19 @@ export default class App extends React.Component {
 				{id: 2,	name: 'Avatar'},
 				{id: 3, name: 'Finish'},
 			],
-			username: "",
-			userSurname: "",
-			email: "",
-			phone: "",
-			password: "",
-			repeatPassword: "",
-			agreeConfidential: true,
-			gender: "male",
-			country: 0,
-			city: 0,
-			avatar: "",
+			values: {
+				username: "",
+				userSurname: "",
+				email: "",
+				phone: "",
+				password: "",
+				repeatPassword: "",
+				agreeConfidential: true,
+				gender: "male",
+				country: 0,
+				city: 0,
+				avatar: "",				
+			},
 			errors: {
 				username: false,
 				userSurname: false,
@@ -97,17 +100,19 @@ export default class App extends React.Component {
 	onReset = () => {
 		this.setState({
 			activeStep: 0,
-			username: "",
-			userSurname: "",
-			email: "",
-			phone: "",
-			password: "",
-			repeatPassword: "",
-			agreeConfidential: true,
-			gender: "male",
-			country: "0",
-			city: "0",
-			avatar: "",
+			values: {
+				username: "",
+				userSurname: "",
+				email: "",
+				phone: "",
+				password: "",
+				repeatPassword: "",
+				agreeConfidential: true,
+				gender: "male",
+				country: "0",
+				city: "0",
+				avatar: "",				
+			},
 			errors: {}
 		});
 	};
@@ -115,47 +120,8 @@ export default class App extends React.Component {
 	onSubmit = event => {
 		event.preventDefault();
 		const errors = {};
-			let nameRegExp	= /^[a-zа-яієїґ'\s]{2,30}$/i,
-				emailRegExp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i,
-				phoneRegExp = /^[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
-		switch (this.state.activeStep) {
-			case 0: 
-				if (this.state.username.length < 3 && !nameRegExp.test(this.state.username)) {
-					errors.username = "Must be 3 characters or more, only letters";
-				}
-				if (this.state.userSurname.length < 3 && !nameRegExp.test(this.state.userSurname)) {
-					errors.userSurname = "Must be 3 characters or more";
-				}
-				if (this.state.password < 3) {
-					errors.password = "Must be 3 characters or more";
-				}
-				if (this.state.password !== this.state.repeatPassword) {
-					errors.repeatPassword = "Must be equal password";
-				}
-				break;
-			case 1: 
-				if (!emailRegExp.test(this.state.email)) {
-					errors.email = "Must be symbol @";
-				}
-				if (!phoneRegExp.test(this.state.phone)) {
-					errors.phone = "Must be only digitals and +";
-				}
-				if (this.state.country === "0") {
-					errors.country = "Choose country";
-				}
-				if (this.state.city === "0") {
-					errors.city = "Choose city";
-				}
-				break;
-			case 2:
-				if (!this.state.agreeConfidential) {
-					errors.agreeConfidential = "You should agree";
-				}
-				if (!this.state.avatar) {
-					errors.avatar = "Required";
-				}
-				break;
-			}
+		formValidator(this.state.values);
+
 			if (Object.keys(errors).length > 0) {
 				this.setState({
 					errors: errors
@@ -175,10 +141,10 @@ export default class App extends React.Component {
 			<div className="form-container card">
 				<StepsList steps={this.state.steps} activeStep={this.state.activeStep} />
 				<form className="form card-body">
-					{ this.state.activeStep === 0 && <BasicStep state={this.state} onChange={this.onChange} onRadio={this.onRadio} /> }
-					{ this.state.activeStep === 1 && <ContactsStep state={this.state} onChange={this.onChange} onChangeCountry={this.onChangeCountry} /> }
-					{ this.state.activeStep === 2 && <AvatarStep state={this.state} onCheck={this.onCheck} onChangeAvatar={this.onChangeAvatar} /> }
-					{ this.state.activeStep === 3 && <FinishStep state={this.state} onReset={this.onReset} /> }
+					{ this.state.activeStep === 0 && <BasicStep values={this.values} errors={this.errors} onChange={this.onChange} onRadio={this.onRadio} /> }
+					{ this.state.activeStep === 1 && <ContactsStep values={this.values} errors={this.errors}  onChange={this.onChange} onChangeCountry={this.onChangeCountry} /> }
+					{ this.state.activeStep === 2 && <AvatarStep values={this.values} errors={this.errors} onCheck={this.onCheck} onChangeAvatar={this.onChangeAvatar} /> }
+					{ this.state.activeStep === 3 && <FinishStep  values={this.values} onReset={this.onReset} /> }
 					{ !(this.state.activeStep === (this.state.steps.length - 1)) && <Buttons activeStep={this.activeStep} onPrev={this.onPrev}  onSubmit={this.onSubmit} /> }
 
 				</form>

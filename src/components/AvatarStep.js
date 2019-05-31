@@ -1,16 +1,17 @@
 import React from "react";
-import Field from "./Field";
-import Check from "./Check";
+import Field from "./common/Field";
+import CheckboxField from "./common/CheckboxField";
 const AvatarStep = props => {
 	const {
-		state,
+		values,
+		errors,
 		onCheck,
 		onChangeAvatar
 	} = props;
 	return (
 		<div className='step'>
 			<div className='avatar'>
-				{!(state.avatar) ? <img src='./images/default-avatar.59337bae.png' alt='' /> : <img src={state.avatar} alt='' />}
+				{!(values.avatar) ? <img src='./images/default-avatar.59337bae.png' alt='' /> : <img src={values.avatar} alt='' />}
 			</div>
 			<div className="form-group">
 				<div className="custom-file">
@@ -22,19 +23,19 @@ const AvatarStep = props => {
 						onChange={onChangeAvatar}
 					/>
 					<label className="custom-file-label" htmlFor="avatar">Choose file</label>
-					{state.errors.avatar ? <div className="invalid-feedback">{state.errors.avatar}</div> : null}
+					{errors.avatar ? <div className="invalid-feedback">{errors.avatar}</div> : null}
 				</div>
 			</div>
-			<Check
+			<CheckboxField
 				className="form-check-input"
 				type="checkbox"
 				id="agreeConfidential"
 				labelText="Confirm the processing of data"
 				name="agreeConfidential"
-				value={state.agreeConfidential}
+				value={values.agreeConfidential}
 				onChange={onCheck}
-				checked={state.agreeConfidential}
-				error={state.errors.agreeConfidential}
+				checked={values.agreeConfidential}
+				error={errors.agreeConfidential}
 			/>
 		</div>
 	);

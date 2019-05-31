@@ -1,6 +1,6 @@
 import React from "react";
 
-const Radio = props => {
+const RadioboxField = props => {
 	const {
 		id,
 		labelText,
@@ -9,7 +9,7 @@ const Radio = props => {
 		options,
 		onRadio
 	} = props;
-	const getRadioOptions = () => {
+	const getRadioItems = () => {
 		return options.map(item => (
 			<div key={item.value}>
 				<input
@@ -29,10 +29,10 @@ const Radio = props => {
 	<div className="form-group">
 	  <div className="form-check" id={id}>
 	  <div>{labelText}</div>
-	  {getRadioOptions()}
+	  {getRadioItems()}
 	  </div>
 	</div>
   );
 };
 
-export default Radio;
+export default RadioboxField;

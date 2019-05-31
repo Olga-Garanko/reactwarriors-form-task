@@ -3,20 +3,20 @@ import countries from "../data/countries";
 import cities from "../data/cities";
 const FinishStep = props => {
 	const {
-		state,
+		values,
 		onReset
 	} = props;
 	return (
 		<div className='step'>
 			<div className='avatar'>
-				<img src={state.avatar} alt='' />
+				<img src={values.avatar} alt='' />
 			</div>
-			<div>{state.username} {state.userSurname}</div>
-			<div>Email: {state.email}</div>
-			<div>Mobile: {state.phone}</div>
+			<div>{values.username} {values.userSurname}</div>
+			<div>Email: {values.email}</div>
+			<div>Mobile: {values.phone}</div>
 			<div>Location: 
-				{state.country && countries.find(item => +item.id === +state.country).name} , 
-				{state.city && cities[state.city] && cities[state.city].name}
+				{values.country && countries.find(item => +item.id === +values.country).name} , 
+				{values.city && cities[values.city] && cities[values.city].name}
 			</div>
 			<button
 				type="button"

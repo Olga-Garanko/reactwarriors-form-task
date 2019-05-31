@@ -1,6 +1,6 @@
 import React from "react";
-import Field from "./Field";
-import Radio from "./Radio";
+import Field from "./common/Field";
+import RadioboxField from "./common/RadioboxField";
 const BasicStep = props => {
 	const {
 		state,
@@ -49,7 +49,7 @@ const BasicStep = props => {
 				onChange={onChange}
 				error={state.errors.repeatPassword}
 			/>
-			<Radio
+			<RadioboxField
 				className="form-check-input"
 				id="gender"
 				labelText="Gender"

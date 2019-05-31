@@ -1,6 +1,6 @@
 import React from "react";
 
-const Check = props => {
+const CheckboxField = props => {
   const {
     id,
     labelText,
@@ -30,4 +30,4 @@ const Check = props => {
   );
 };
 
-export default Check;
+export default CheckboxField;
