@@ -3,9 +3,11 @@ import Field from "./common/Field";
 import RadioboxField from "./common/RadioboxField";
 const BasicStep = props => {
 	const {
-		state,
+		values,
+		errors,
 		onChange,
-		onRadio
+		onRadio,
+		genders
 	} = props;
 	return (
 		<div className='step'>
@@ -15,9 +17,9 @@ const BasicStep = props => {
 				type="text"
 				placeholder="Enter firstname"
 				name="username"
-				value={state.username}
+				value={values.username}
 				onChange={onChange}
-				error={state.errors.username}
+				error={errors.username}
 			/>
 			<Field
 				id="userSurname"
@@ -25,9 +27,9 @@ const BasicStep = props => {
 				type="text"
 				placeholder="Enter lastname"
 				name="userSurname"
-				value={state.userSurname}
+				value={values.userSurname}
 				onChange={onChange}
-				error={state.errors.userSurname}
+				error={errors.userSurname}
 			/>
 			<Field
 				id="password"
@@ -35,9 +37,9 @@ const BasicStep = props => {
 				type="password"
 				placeholder="Enter password"
 				name="password"
-				value={state.password}
+				value={values.password}
 				onChange={onChange}
-				error={state.errors.password}
+				error={errors.password}
 			/>
 			<Field
 				id="repeatPassword"
@@ -45,18 +47,19 @@ const BasicStep = props => {
 				type="password"
 				placeholder="Repeat password"
 				name="repeatPassword"
-				value={state.repeatPassword}
+				value={values.repeatPassword}
 				onChange={onChange}
-				error={state.errors.repeatPassword}
+				error={errors.repeatPassword}
 			/>
 			<RadioboxField
 				className="form-check-input"
 				id="gender"
 				labelText="Gender"
 				name="gender"
-				selectedValue={state.gender}
+				selectedValue={values.gender}
+				options = {genders}
 				onRadio={onRadio}
-				options={state.genders}
+				options={genders}
 			/>
 		</div>
 	);

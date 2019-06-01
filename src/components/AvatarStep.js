@@ -1,5 +1,4 @@
 import React from "react";
-import Field from "./common/Field";
 import CheckboxField from "./common/CheckboxField";
 const AvatarStep = props => {
 	const {

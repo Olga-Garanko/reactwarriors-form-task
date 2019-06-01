@@ -1,14 +1,10 @@
 import React from "react";
-import Field from "./Field";
-import CheckboxField from "./common/CheckboxField";
-import RadioboxField from "./common/RadioboxField";
-import SelectField from "./common/SelectField";
 import StepsList from "./StepsList";
 import BasicStep from "./BasicStep";
 import ContactsStep from "./ContactsStep";
 import AvatarStep from "./AvatarStep";
 import FinishStep from "./FinishStep";
-import validator from "./services/validator";
+import formValidator from "../services/validator";
 import Buttons from "./common/Buttons";
 export default class App extends React.Component {
 	constructor() {
@@ -58,39 +54,58 @@ export default class App extends React.Component {
 	};
 	
 	onChange = event => {
-		this.setState({
+		const newValues = {
+			...this.state.values,
 			[event.target.name]: event.target.value
+		};
+		this.setState({
+			values: newValues
 		});
 	};
 
 	onChangeCountry = event => {
-		this.setState({
+		const newValues = {
+			...this.state.values,
 			[event.target.name]: event.target.value,
 			city: 0
+		};
+		this.setState({
+			values: newValues,
 		});
 	};
 
 	onCheck = event => {
-		this.setState({
+		const newValues = {
+			...this.state.values,
 			[event.target.name]: event.target.checked
+		};
+		this.setState({
+			values: newValues
 		});
 	};
 
 	onRadio = event => {
-		this.setState({
+		const newValues = {
+			...this.state.values,
 			gender: event.target.value
+		};
+		this.setState({
+			values: newValues
 		});
-		console.log(this.state.gender);
 	};
 
 	onChangeAvatar = event => {
 		const reader = new FileReader();
 		reader.onload = event => {
-			this.setState({
+			const newValues = {
+				...this.state.values,
 				avatar: event.target.result
+			};
+			this.setState({
+				values: newValues
 			});
-		};
-		reader.readAsDataURL(event.target.files[0]);
+			reader.readAsDataURL(event.target.files[0]);
+		}
 	};
 
 	onPrev = () => {
@@ -119,8 +134,8 @@ export default class App extends React.Component {
 
 	onSubmit = event => {
 		event.preventDefault();
-		const errors = {};
-		formValidator(this.state.values);
+		let errors = formValidator(this.state.values, this.state.activeStep);
+		
 
 			if (Object.keys(errors).length > 0) {
 				this.setState({
@@ -141,10 +156,10 @@ export default class App extends React.Component {
 			<div className="form-container card">
 				<StepsList steps={this.state.steps} activeStep={this.state.activeStep} />
 				<form className="form card-body">
-					{ this.state.activeStep === 0 && <BasicStep values={this.values} errors={this.errors} onChange={this.onChange} onRadio={this.onRadio} /> }
-					{ this.state.activeStep === 1 && <ContactsStep values={this.values} errors={this.errors}  onChange={this.onChange} onChangeCountry={this.onChangeCountry} /> }
-					{ this.state.activeStep === 2 && <AvatarStep values={this.values} errors={this.errors} onCheck={this.onCheck} onChangeAvatar={this.onChangeAvatar} /> }
-					{ this.state.activeStep === 3 && <FinishStep  values={this.values} onReset={this.onReset} /> }
+					{ this.state.activeStep === 0 && <BasicStep values={this.state.values} errors={this.state.errors} onChange={this.onChange} onRadio={this.onRadio} genders={this.state.genders} /> }
+					{ this.state.activeStep === 1 && <ContactsStep values={this.state.values} errors={this.state.errors}  onChange={this.onChange} onChangeCountry={this.onChangeCountry} /> }
+					{ this.state.activeStep === 2 && <AvatarStep values={this.state.values} errors={this.state.errors} onCheck={this.onCheck} onChangeAvatar={this.onChangeAvatar} /> }
+					{ this.state.activeStep === 3 && <FinishStep  values={this.state.values} onReset={this.onReset} /> }
 					{ !(this.state.activeStep === (this.state.steps.length - 1)) && <Buttons activeStep={this.activeStep} onPrev={this.onPrev}  onSubmit={this.onSubmit} /> }
 
 				</form>

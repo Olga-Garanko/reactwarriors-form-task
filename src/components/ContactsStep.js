@@ -17,11 +17,12 @@ const getCitiesByCountry = countryId => {
 };
 const ContactsStep = props => {
 	const {
-		state,
+		values,
+		errors,
 		onChange,
 		onChangeCountry
 	} = props;
-	const optionsCitiesByCountry = getCitiesByCountry(state.country);
+	const optionsCitiesByCountry = getCitiesByCountry(values.country);
 	return (
 		<div className='step'>
 			<Field
@@ -30,9 +31,9 @@ const ContactsStep = props => {
 				type="text"
 				placeholder="Enter email"
 				name="email"
-				value={state.email}
+				value={values.email}
 				onChange={onChange}
-				error={state.errors.email}
+				error={errors.email}
 			/>
 			<Field
 				id="phone"
@@ -40,29 +41,29 @@ const ContactsStep = props => {
 				type="text"
 				placeholder="Enter mobile (000) 000-0000"
 				name="phone"
-				value={state.phone}
+				value={values.phone}
 				onChange={onChange}
-				error={state.errors.phone}
+				error={errors.phone}
 			/>
 			<SelectField
 				className="form-control"
 				id="country"
 				labelText="Country"
 				name="country"
-				value={state.country}
+				value={values.country}
 				options={countries}
 				onChange={onChangeCountry}
-				error={state.errors.country}
+				error={errors.country}
 			/>
-			<SelectorField
+			<SelectField
 				className="form-control"
 				id="city"
 				labelText="City"
 				name="city"
-				value={state.city}
+				value={values.city}
 				options={optionsCitiesByCountry}
 				onChange={onChange}
-				error={state.errors.city}
+				error={errors.city}
 			/>
 		</div>
 	);
