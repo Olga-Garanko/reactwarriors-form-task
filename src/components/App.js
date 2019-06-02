@@ -93,7 +93,6 @@ export default class App extends React.Component {
 			values: newValues
 		});
 	};
-
 	onChangeAvatar = event => {
 		const reader = new FileReader();
 		reader.onload = event => {
@@ -104,9 +103,10 @@ export default class App extends React.Component {
 			this.setState({
 				values: newValues
 			});
-			reader.readAsDataURL(event.target.files[0]);
-		}
-	};
+		};
+		reader.readAsDataURL(event.target.files[0]);
+		console.log(this.state.avatar)
+};
 
 	onPrev = () => {
 		if (this.state.activeStep > 0) this.setState({activeStep: this.state.activeStep - 1})
