@@ -6,6 +6,17 @@ import AvatarStep from "./AvatarStep";
 import FinishStep from "./FinishStep";
 import formValidator from "../services/validator";
 import Buttons from "./common/Buttons";
+const genders = [{
+		id: "male",
+		value: "male",
+		labelText: "Male"
+	},
+	{
+		id: "female",
+		value: "female",
+		labelText: "Female"
+	},
+];
 export default class App extends React.Component {
 	constructor() {
 		super();
@@ -39,20 +50,9 @@ export default class App extends React.Component {
 				repeatPassword: false,
 				agreeConfidential: false,
 			},
-			genders: [{
-					id: "male",
-					value: "male",
-					labelText: "Male"
-				},
-				{
-					id: "female",
-					value: "female",
-					labelText: "Female"
-				},
-			],
 		};
 	};
-	
+
 	onChange = event => {
 		const newValues = {
 			...this.state.values,
@@ -156,11 +156,11 @@ export default class App extends React.Component {
 			<div className="form-container card">
 				<StepsList steps={this.state.steps} activeStep={this.state.activeStep} />
 				<form className="form card-body">
-					{ this.state.activeStep === 0 && <BasicStep values={this.state.values} errors={this.state.errors} onChange={this.onChange} onRadio={this.onRadio} genders={this.state.genders} /> }
+					{ this.state.activeStep === 0 && <BasicStep values={this.state.values} errors={this.state.errors} onChange={this.onChange} onRadio={this.onRadio} genders={genders} /> }
 					{ this.state.activeStep === 1 && <ContactsStep values={this.state.values} errors={this.state.errors}  onChange={this.onChange} onChangeCountry={this.onChangeCountry} /> }
 					{ this.state.activeStep === 2 && <AvatarStep values={this.state.values} errors={this.state.errors} onCheck={this.onCheck} onChangeAvatar={this.onChangeAvatar} /> }
 					{ this.state.activeStep === 3 && <FinishStep  values={this.state.values} onReset={this.onReset} /> }
-					{ !(this.state.activeStep === (this.state.steps.length - 1)) && <Buttons activeStep={this.activeStep} onPrev={this.onPrev}  onSubmit={this.onSubmit} /> }
+					{ (this.state.activeStep !== (this.state.steps.length - 1)) && <Buttons activeStep={this.activeStep} onPrev={this.onPrev}  onSubmit={this.onSubmit} /> }
 
 				</form>
 			</div>
