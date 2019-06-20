@@ -160,7 +160,7 @@ export default class App extends React.Component {
 					{ this.state.activeStep === 1 && <ContactsStep values={this.state.values} errors={this.state.errors}  onChange={this.onChange} onChangeCountry={this.onChangeCountry} /> }
 					{ this.state.activeStep === 2 && <AvatarStep values={this.state.values} errors={this.state.errors} onCheck={this.onCheck} onChangeAvatar={this.onChangeAvatar} /> }
 					{ this.state.activeStep === 3 && <FinishStep  values={this.state.values} onReset={this.onReset} /> }
-					{ (this.state.activeStep !== (this.state.steps.length - 1)) && <Buttons activeStep={this.activeStep} onPrev={this.onPrev}  onSubmit={this.onSubmit} /> }
+					{ (this.state.activeStep !== (this.state.steps.length - 1)) && <Buttons activeStep={this.state.activeStep} onPrev={this.onPrev}  onSubmit={this.onSubmit} /> }
 
 				</form>
 			</div>
